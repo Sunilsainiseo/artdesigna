@@ -147,35 +147,40 @@
         class="lazy-image {{ image_classes }}"
         style="{{ image_styles }}"
         {{ image_attributes }}>
-        <source media="(min-width: 768px)" sizes="{{ sizes }}" srcset="{{ srcset_desktop }}" />
-        <source media="(max-width: 767px)" sizes="{{ sizes }}" srcset="{{ srcset_mobile }}" />
+        <source media="(min-width: 768px)" sizes="{{ sizes }}" data-srcset="{{ srcset_desktop }}" />
+        <source media="(max-width: 767px)" sizes="{{ sizes }}" data-srcset="{{ srcset_mobile }}" />
 
-        {{ image | image_url: width: width, height: height | image_tag:
-          loading: loading,
-          fetchpriority: fetchpriority,
-          preload: preload,
-          sizes: sizes,
-          srcset: srcset_desktop,
-          alt: alt,
-          class: 'is-loading',
-          style: 'object-position: var(--focal-point, center)'
-          | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="'
-        }}
+        <img class='is-loading'
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" 
+            data-src="{{ image | image_url: width: width, height: height }}" 
+            data-mob-src="{{ image | image_url: width: width, height: height }}" 
+            loading="{{ loading }}"
+            fetchpriority="{{ fetchpriority }}" 
+            width="{{ width }}" 
+            height="{{ height }}" 
+            sizes="{{ sizes }}" 
+            data-srcset="{{ srcset_desktop }}" 
+            alt="{{ alt }}" 
+            style='object-position: var(--focal-point, center)'
+        />
       </picture>
     {%- else -%}
       <figure class="lazy-image {{ image_classes }}"
         style="{{ image_styles }}"
         {{ image_attributes }}>
-        {{ image | image_url: width: width, height: height | image_tag:
-          loading: loading,
-          fetchpriority: fetchpriority,
-          preload: preload,
-          sizes: sizes,
-          srcset: srcset,
-          alt: alt,
-          class: 'is-loading'
-          | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="'
-        }}
+        <img class='is-loading'
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" 
+            data-src="{{ image | image_url: width: width, height: height }}" 
+            data-mob-src="{{ image | img_url: '540x' }}" 
+            data-mob-src="{{ image | image_url: width: width, height: height }}" 
+            loading="{{ loading }}"
+            fetchpriority="{{ fetchpriority }}" 
+            width="{{ width }}" 
+            height="{{ height }}" 
+            sizes="{{ sizes }}" 
+            datalate-srcset="{{ srcset }}" 
+            alt="{{ alt }}" 
+        />
       </figure>
     {%- endif -%}
 

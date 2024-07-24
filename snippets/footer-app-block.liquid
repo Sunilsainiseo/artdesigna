@@ -1,0 +1,91 @@
+{% comment %}
+<script>
+if(window.inner1Width > 767){
+    var images = document.querySelectorAll('source[media="(min-width: 768px)"]');
+    if(images){
+      images.forEach(function (img) {
+            var dataSrcsetValue = img.getAttribute('data-srcset');
+            img.setAttribute('srcset', dataSrcsetValue);
+            img.removeAttribute('data-srcset');
+      });
+    }
+}  
+</script>
+{% endcomment %}
+<script>
+    var site_nav_link_burger = true;
+    document.addEventListener("DOMContentLoaded", function() {
+        var icon_menu = document.querySelector(".js-drawer-open");
+        icon_menu.addEventListener("click", function() {
+            if(site_nav_link_burger) {
+                event.preventDefault();
+                site_nav_link_burger = false;
+            }
+        });
+    }) 
+    var site_nav_link_burger2 = true;
+    document.addEventListener("DOMContentLoaded", function() {
+        var icon_menu2 = document.querySelector(".product__submit__add");
+        if(icon_menu2){
+          icon_menu2.addEventListener("click", function() {
+              if(site_nav_link_burger2) {
+                  event.preventDefault();
+                  site_nav_link_burger2 = false;
+              }
+          });
+        }
+    })   
+  {% if template contains 'product' %}
+  {% assign price = product.selected_or_first_available_variant.price %}
+  {% assign cprice = product.selected_or_first_available_variant.compare_at_price %}
+  document.querySelector('[data-price-off-amount]').innerText = '{{ cprice | minus: price | money }}';
+  {% endif %}
+</script>
+<script>
+  let navheight = document.getElementById('NavStandard').offsetHeight;
+  let footerheight = document.getElementById('SiteFooter').offsetHeight;
+  let contentfullheight = window.innerHeight - navheight - footerheight;
+  document.documentElement.style.setProperty('--content-min', `${contentfullheight}px`);
+</script>
+<script type="lazyload_int">
+    document.addEventListener('DOMContentLoaded', function () {
+    setInterval(function() {
+        var images = document.querySelectorAll('img[datalate-srcset][data-done="Loaded"]');
+        if(images){
+          images.forEach(function (img) {
+                var dataSrcsetValue = img.getAttribute('datalate-srcset');
+                img.setAttribute('srcset', dataSrcsetValue);
+                img.removeAttribute('datalate-srcset');
+          });
+        }
+    }, 1000);
+    });
+</script>
+<script>
+    const getScrollbarWidth1 = () => {
+      // Creating invisible container
+      const outer1 = document.createElement('div');
+      outer1.style.visibility = 'hidden';
+      outer1.style.overflow = 'scroll'; // forcing scrollbar to appear
+      outer1.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+      document.body.appendChild(outer1);
+
+      // Creating inner1 element and placing it in the container
+      const inner1 = document.createElement('div');
+      outer1.appendChild(inner1);
+
+      // Calculating difference between container's full width and the child width
+      const scrollbarWidth1 = outer1.offsetWidth - inner1.offsetWidth;
+
+      // Removing temporary elements from the DOM
+      outer1.parentNode.removeChild(outer1);
+
+      return scrollbarWidth1;
+    };
+
+    document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth1()}px`);  
+</script>
+<div id="shopify-block-2104245418471043333" class="shopify-block shopify-app-block"><script type="lazyload_int" data-src="https://cdn.seel.com/releases/scripts/shopify-bp/bp-embedded.min.js" data-open-flag="17TRACK Protection Widget Embed App Script"></script>
+
+</div>
+{% render 'eastimated-delivery-app' %}

@@ -1,0 +1,82 @@
+<style>
+@media (max-width: 767px){
+html:not(.w3_start) .template-index .mosaic__item:not(.mosaic__item--1) img {
+    opacity: 0 !important;
+}
+.product-single__thumbnails:not(.flickity-enabled) .product-single__thumbnail:nth-child(1) {
+    min-width: 115px;
+}
+.product-single__thumbnails:not(.flickity-enabled) .product-single__thumbnail {
+    min-width: 100px;
+}}
+html:not(.jsload) span.product__price--off.hidden {
+    display: block !important;
+}
+html:not(.jsload) .announcement__scale.ticker--unloaded {
+    opacity: 1 !important;
+    position: unset !important;
+    width: unset !important;
+}
+
+html:not(.jsload) .loading-overlay {
+    display: none !important;
+}
+html:not(.jsload) img[loading].is-loading {
+    opacity: 1 !important;
+}
+html:not(.jsload) .lazy-image.is-loading {
+    z-index: auto !important;
+}
+/* html:not(.jsload) .slider--zoom-out.slider , html:not(.jsload) .slider--zoom-out.slider * {
+    transform: none !important;
+    animation: none !important;
+} */
+@media (max-width: 1024px){
+.product-single__media-slider:not(.flickity-enabled) .product-single__media-slide:nth-child(n+2) {
+    display: none;
+}
+}
+@media (min-width: 768px){
+.product__block.product__form__wrapper:not(:has(.deliverydate)) {
+    padding-bottom: 224px;
+} 
+.product__block.product__form__wrapper .deliverydate,.sb_delivery .step_template:after,.product__block.product__form__wrapper .deliverydate * {
+    animation: none !important;
+    opacity: 1 !important;
+}}
+.slider--zoom-out .slide__image__inner {
+    transform: scale(1) !important;
+}
+html:not(.w3_user) .header__dropdown__image img {
+    opacity: 0 !important;
+}
+.no-js .slider--zoom-out .item .slide__image__inner,
+.slider--zoom-out.img-in .item:only-of-type .slide__image__inner,
+.slider--zoom-out.img-in.flickity-enabled .is-selected .slide__image__inner {
+    transform: scale(1) !important;
+}
+.template-index .slider--zoom-out .slide__image__inner picture.lazy-image:after {
+    content: unset !important;
+}
+.list-collections-section .grid__container .list-collections__item figure.lazy-image::after, .template-collection  figure.lazy-image::after,.product-single__gallery .product-single__media figure.lazy-image::after, .banner-image .banner-image__image-inner figure.lazy-image::after, .mosaic .mosaic__item .mosaic__item__image figure.lazy-image::after, .product-single__thumbnails .product-single__thumbnail figure.lazy-image:after{
+    content: unset !important;
+}
+/* .banner-image--zoom-out  .banner-image__image-inner {
+    transform: scale(1) !important;
+    animation: var(--duration) var(--easing) zoomOut !important;
+} */
+html:not(.jsload) .banner-image--zoom-out .banner-image__image-inner, .banner-image--zoom-out.img-in .banner-image__image-inner {
+    transform: scale(var(--scale-factor));
+    animation: var(--duration) var(--easing) zoomOut;
+    animation-fill-mode: forwards;
+}
+/* html:not(.jsload) .product-single__details:not(:has(.Vtl-WishlistButtonWrapper)) .product__block.standard__app:has(#ImageUploaderContainer) {
+    padding-top: 42px;
+} */
+html:not(.jsload) .Vtl-WishlistButtonWrapper {
+  min-height: 42px;
+}
+html:not(.jsload) .deliverydate {
+  min-height: 224px;
+}
+</style>

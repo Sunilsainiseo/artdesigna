@@ -1,0 +1,106 @@
+<!-- BEGIN app block: shopify://apps/elevar-conversion-tracking/blocks/dataLayerEmbed/bc30ab68-b15c-4311-811f-8ef485877ad6 -->
+
+
+
+<script data-w3-type="module" type="lazyload_int" dynamic>
+  const configUrl = "/a/elevar/static/configs/59b87bf04c76a642d785e483ec70c2ac1fbbe5b9/config.js";
+  const config = (await import(configUrl)).default;
+  const scriptUrl = config.script_src_app_theme_embed;
+
+  if (scriptUrl) {
+    const { handler } = await import(scriptUrl);
+
+    handler(
+      config,
+      {
+        cartData: {
+  attributes:{{- cart.attributes | json -}},
+  cartTotal: "{{- cart.total_price | times: 0.01 | json -}}",
+  currencyCode:{{- cart.currency.iso_code | json -}},
+  items: [{%- for line_item in cart.items -%}{ {%- if line_item.sku != blank -%}id: {{- line_item.sku | json -}},{%- else -%}id: "{{- line_item.product_id | json -}}",{%- endif -%}name:{{- line_item.product.title | json -}},
+        brand:{{- line_item.vendor | json -}},
+        category:{{- line_item.product.type | json -}},
+        variant:{{- line_item.variant.title | json -}},
+        price: "{{- line_item.final_price | times: 0.01 | json -}}",
+        position:{{- forloop.index -}},
+        quantity: "{{- line_item.quantity | json -}}",
+        productId: "{{- line_item.product_id | json -}}",
+        variantId: "{{- line_item.variant_id -}}",
+        compareAtPrice: "{{- line_item.variant.compare_at_price | times: 0.01 | json -}}",
+        image: "{{- line_item.image | image_url -}}",
+        url:{{- line_item.url | json -}} },{%- endfor -%}]
+}
+,
+        user: { {%- if checkout -%}cartTotal: "{{- checkout.total_price | times: 0.01 | json -}}",
+    currencyCode:{{- checkout.currency | json -}},{%- else -%}cartTotal: "{{- cart.total_price | times: 0.01 | json -}}",
+    currencyCode:{{- cart.currency.iso_code | json -}},{% endif %}customer: { {%- if customer -%}id: "{{- customer.id | json -}}",email:{{- customer.email | json -}},firstName:{{- customer.first_name | json -}},lastName:{{- customer.last_name | json -}},phone: {{- customer.phone | json -}},city: {{- customer.default_address.city | json -}},zip: {{- customer.default_address.zip | json -}},address1: {{- customer.default_address.address1 | json -}},address2: {{- customer.default_address.address2 | json -}},country: {{- customer.default_address.country | json -}},countryCode: {{- customer.default_address.country_code | json -}},province: {{- customer.default_address.province | json -}},provinceCode: {{- customer.default_address.province_code | json -}},tags: {{- customer.tags | join: ', ' | json -}}{% endif %} },
+}
+,
+        {% if template contains 'cart' %}
+        isOnCartPage:true,
+        {% else %}
+        isOnCartPage:false,
+        {% endif %}
+        {% unless template contains 'collection' %}
+        collectionView: null,
+        {% endunless %}
+        {% if template contains 'list-collection' %}
+        collectionView: null,
+        {% endif %}
+        {% if template contains 'collection' %}
+        {% unless template contains 'list-collection' %}
+        collectionView:{
+    currencyCode:{{- cart.currency.iso_code | json -}},
+    items: [{%- assign itemIndex = 1 -%}{%- for product in collection.products -%}{%- assign default_variant = product.selected_or_first_available_variant -%}{ {%- if default_variant.sku != blank -%}id: {{- default_variant.sku | json -}},{%- else -%}id: "{{- default_variant.id | json -}}",{%- endif -%}name:{{- product.title | json -}},
+          brand:{{- product.vendor | json -}},
+          category:{{- product.type | json -}},
+          variant:{{- default_variant.title | json -}},
+          price: "{{- product.price | times: 0.01 | json -}}",
+          productId: "{{- product.id | json -}}",
+          variantId: "{{- default_variant.id | json -}}",
+          handle:{{- product.handle | json -}},
+          compareAtPrice: "{{ product.compare_at_price | times: 0.01 | json }}",image:{{ product.featured_image | json }} },{%- assign itemIndex = itemIndex | plus: 1 -%}{%- endfor -%}]
+  },{% endunless %}{% endif %}
+        {% if canonical_url contains '/search' %}
+        searchResultsView:{
+        currencyCode:{{- cart.currency.iso_code | json -}},
+        items: [{%- assign itemIndex = 1 -%}{%- for product in search.results -%}{%- if product.object_type == 'product' -%}{%- for variant in product.variants -%}{ {%- if variant.sku != blank -%}id: {{- variant.sku | json -}},{%- else -%}id: "{{- variant.id | json -}}",{%- endif -%}name:{{- product.title | json -}},
+                  brand:{{- product.vendor | json -}},
+                  category:{{- product.type | json -}},
+                  variant:{{- variant.title | json -}},
+                  price: "{{- product.price | times: 0.01 | json -}}",
+                  productId: "{{- product.id | json -}}",
+                  variantId: "{{- variant.id | json -}}",
+                  handle:{{- product.handle | json -}} },{%- endfor -%}{%- assign itemIndex = itemIndex | plus: 1 -%}{%- endif -%}{%- endfor -%}]
+  },{% else %}
+        searchResultsView: null,
+        {% endif %}
+        {% if template contains 'product' %}
+        productView:{
+    attributes:{{- cart.attributes | json -}},
+    currencyCode:{{- cart.currency.iso_code | json -}},{%- assign default_variant = product.selected_or_first_available_variant -%}{%- if default_variant != blank -%}defaultVariant: { {%- if default_variant.sku != blank -%}id:{{- default_variant.sku | json -}},{%- else -%}id: "{{- default_variant.id | json -}}",{%- endif -%}name:{{- product.title | json -}},
+        brand:{{- product.vendor | json -}},
+        category:{{- product.type | json -}},
+        variant:{{- default_variant.title | json -}},
+        price: "{{- default_variant.price | times: 0.01 | json -}}",
+        productId: "{{- product.id | json -}}",
+        variantId: "{{- default_variant.id | json -}}",
+        compareAtPrice: "{{- default_variant.compare_at_price | times: 0.01 | json -}}",{%- if default_variant.featured_image != blank -%}image:{{- default_variant.featured_image.src | json -}},{%- else -%}image: {{- product.featured_image.src | json -}},{%- endif -%}url:{{ default_variant.url | json }} },{%- else -%}defaultVariant: null,{%- endif -%}items: [{%- for variant in product.variants -%}{ {%- if variant.sku != blank -%}id:{{- variant.sku | json -}},{%- else -%}id: "{{- variant.id | json -}}",{%- endif -%}name:{{- product.title | json -}},
+          brand:{{- product.vendor | json -}},
+          category:{{- product.type | json -}},
+          variant:{{- variant.title | json -}},
+          price: "{{- variant.price | times: 0.01 | json -}}",
+          productId: "{{- product.id | json -}}",
+          variantId: "{{- variant.id | json -}}",
+          compareAtPrice: "{{- variant.compare_at_price | times: 0.01 | json -}}",{%- if variant.featured_image != blank -%}image:{{- variant.featured_image.src | json -}},{%- else -%}image: {{- product.featured_image.src | json -}},{%- endif -%}url:{{ variant.url | json }} },{%- endfor -%}]
+          },{% else %}
+          productView: null,
+          {% endif %}
+          checkoutComplete: null
+      }
+    );
+  }
+</script>
+
+
+<!-- END app app block -->

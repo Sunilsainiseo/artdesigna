@@ -322,7 +322,7 @@
 
                 assign sizes = '(min-width: 1024px) ' | append: img_width_lg | append: ', (min-width: 768px) ' | append: img_width_md | append: ', ' | append: img_width_sm
 
-                render 'image-fill', is_background: true, img_object: image, sizes: sizes, placeholder_svg: placeholder_svg, cover: true
+                render 'image-fill2', is_background: true, img_object: image, sizes: sizes, placeholder_svg: placeholder_svg, cover: true
               -%}
             </div>
           {%- endcapture -%}
